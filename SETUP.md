@@ -35,9 +35,8 @@ PROMETHEUS_BEARER_TOKEN=your_secure_token_here
 # Grafana 설정
 GRAFANA_ADMIN_PASSWORD=your_secure_password
 
-# 알림 설정 (선택사항)
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
-DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK
+# 알림 설정
+MATTERMOST_WEBHOOK_URL=https://mattermost.example.com/hooks/your-mattermost-webhook-id
 ```
 
 ### 4. LLM Auth Proxy 설정
@@ -80,7 +79,6 @@ docker-compose up -d
 ### 파생 지표
 - **실패율**: `rate(llm_requests_failed_total[5m]) / rate(llm_requests_total[5m])`
 - **응답 시간 P95**: `histogram_quantile(0.95, rate(llm_response_latency_seconds_bucket[5m]))`
-- **토큰 효율성**: `rate(llm_tokens_used_total[5m]) / rate(llm_requests_total[5m])`
 
 ## 🚨 알림 규칙
 
@@ -92,6 +90,7 @@ docker-compose up -d
 
 ### 알림 채널 설정
 Alertmanager에서 다음 채널들을 설정할 수 있습니다:
+- Mattermost
 - Email
 - Webhook
 

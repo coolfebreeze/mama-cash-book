@@ -156,70 +156,6 @@
       },
       {
         "id": 3,
-        "title": "Token Usage Efficiency (Tokens per Request)",
-        "type": "timeseries",
-        "targets": [
-          {
-            "expr": "sum(rate(llm_tokens_used_total[5m])) / sum(rate(llm_requests_total[5m]))",
-            "refId": "A",
-            "legendFormat": "Avg Tokens/Request"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "vis": false
-              },
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "short"
-          }
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 8
-        }
-      },
-      {
-        "id": 4,
         "title": "Success Rate by Status Code",
         "type": "piechart",
         "targets": [
@@ -256,7 +192,7 @@
         }
       },
       {
-        "id": 5,
+        "id": 4,
         "title": "Model Performance Comparison",
         "type": "table",
         "targets": [
@@ -309,7 +245,7 @@
         }
       },
       {
-        "id": 6,
+        "id": 5,
         "title": "Team Usage Distribution",
         "type": "bargauge",
         "targets": [
@@ -347,7 +283,7 @@
         }
       },
       {
-        "id": 7,
+        "id": 6,
         "title": "Service Reliability Score",
         "type": "stat",
         "targets": [

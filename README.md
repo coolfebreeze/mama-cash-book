@@ -36,8 +36,6 @@ LLM Auth Proxy를 통한 실시간 모니터링 및 알림 시스템
 - **토큰 사용량**: `llm_tokens_used_total`
 - **실패율**: `llm_requests_failed_total`
 - **응답 시간**: `llm_response_latency_seconds`
-- **비용**: `llm_cost_total`
-- **사용자별 사용량**: `llm_user_usage_total`
 
 ## 🚀 빠른 시작
 
@@ -65,8 +63,8 @@ docker-compose up -d
 ├── grafana/
 │   ├── provisioning/          # 대시보드 자동 설정
 │   └── dashboards/           # 커스텀 대시보드
-├── llm-auth-proxy/           # 메트릭 제공 서비스
-└── scripts/                  # 유틸리티 스크립트
+├── alertmanager/             # Alertmanager 설정
+├── scripts/                  # 유틸리티 스크립트
 ```
 
 ## 🔧 설정
@@ -74,11 +72,10 @@ docker-compose up -d
 ### 환경 변수
 - `PROMETHEUS_BEARER_TOKEN`: 메트릭 접근 토큰
 - `GRAFANA_ADMIN_PASSWORD`: Grafana 관리자 비밀번호
-- `SLACK_WEBHOOK_URL`: Slack 알림 웹훅 (선택사항)
+- `MATTERMOST_WEBHOOK_URL`: Mattermost 알림 웹훅
 
 ### 알림 채널
-- Slack
-- Discord
+- Mattermost
 - Email
 - Webhook
 
@@ -87,16 +84,15 @@ docker-compose up -d
 1. **개요 대시보드**: 전체 시스템 상태
 2. **팀별 분석**: 팀별 사용량 및 성능
 3. **모델별 분석**: 모델별 성능 비교
-4. **비용 분석**: 사용량별 비용 추적
-5. **알림 대시보드**: 활성 알림 현황
+4. **알림 대시보드**: 활성 알림 현황
 
 ## 🚨 알림 규칙
 
 - 실패율 20% 초과 시
 - 응답 시간 P95 2초 초과 시
-- 비용 한도 초과 시
-- 이상 패턴 감지 시
+- 요청 수 급증/급감 시
+- 토큰 사용량 급증 시
 
-## �� 라이센스
+## 📝 라이센스
 
 MIT License
