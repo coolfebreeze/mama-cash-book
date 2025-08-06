@@ -1,0 +1,43 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'llm-monitoring'
+
+rule_files:
+  - "alert.rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # LLM Auth Proxy 메트릭 수집
+  - job_name: 'llm-auth-proxy'
+    metrics_path: /metrics
+    scheme: http
+    bearer_token_file: /etc/prometheus/llm_admin_token.txt
+    static_configs:
+      - targets: ['your-llm-auth-proxy-host:8000']  # 실제 LLM Auth Proxy 주소로 변경
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    honor_labels: true
+    metrics_path: /metrics
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '([^:]+)(?::\d+)?'
+        replacement: '${1}'
+
+  # Prometheus 자체 메트릭
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node Exporter (시스템 메트릭)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s 

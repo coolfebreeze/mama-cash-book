@@ -1,0 +1,103 @@
+groups:
+  - name: llm_alerts
+    rules:
+      # 실패율 급증 알림
+      - alert: LLMFailureRateHigh
+        expr: sum(rate(llm_requests_failed_total[5m])) / sum(rate(llm_requests_total[5m])) > 0.2
+        for: 2m
+        labels:
+          severity: critical
+          team: llm
+        annotations:
+          summary: "LLM 실패율 20% 초과"
+          description: "최근 5분간 실패율이 20%를 초과했습니다. 현재 실패율: {{ $value | humanizePercentage }}"
+
+      # 응답 지연 경고
+      - alert: LLMHighLatency
+        expr: histogram_quantile(0.95, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le)) > 2
+        for: 1m
+        labels:
+          severity: warning
+          team: llm
+        annotations:
+          summary: "LLM 응답 지연"
+          description: "응답시간 P95가 2초를 초과했습니다. 현재 P95: {{ $value }}초"
+
+      # 요청 수 급증 알림
+      - alert: LLMRequestSpike
+        expr: sum(rate(llm_requests_total[1m])) / sum(rate(llm_requests_total[5m])) > 3
+        for: 1m
+        labels:
+          severity: warning
+          team: llm
+        annotations:
+          summary: "LLM 요청 수 급증"
+          description: "요청 수가 급격히 증가했습니다. 1분 평균 대비 3배 이상 증가"
+
+      # 토큰 사용량 급증 알림
+      - alert: LLMTokenUsageSpike
+        expr: sum(rate(llm_tokens_used_total[1m])) / sum(rate(llm_tokens_used_total[5m])) > 5
+        for: 1m
+        labels:
+          severity: warning
+          team: llm
+        annotations:
+          summary: "LLM 토큰 사용량 급증"
+          description: "토큰 사용량이 급격히 증가했습니다. 1분 평균 대비 5배 이상 증가"
+
+      # 서비스별 실패율 알림
+      - alert: LLMServiceFailureRate
+        expr: sum by (service) (rate(llm_requests_failed_total[5m])) / sum by (service) (rate(llm_requests_total[5m])) > 0.15
+        for: 3m
+        labels:
+          severity: warning
+          team: llm
+        annotations:
+          summary: "LLM 서비스별 실패율 높음 - {{ $labels.service }}"
+          description: "서비스 {{ $labels.service }}의 실패율이 15%를 초과했습니다. 현재 실패율: {{ $value | humanizePercentage }}"
+
+      # 모델별 응답 지연 알림
+      - alert: LLMModelLatency
+        expr: histogram_quantile(0.95, sum by (le, model) (rate(llm_response_latency_seconds_bucket[5m]))) > 3
+        for: 2m
+        labels:
+          severity: warning
+          team: llm
+        annotations:
+          summary: "LLM 모델 응답 지연 - {{ $labels.model }}"
+          description: "모델 {{ $labels.model }}의 응답시간 P95가 3초를 초과했습니다. 현재 P95: {{ $value }}초"
+
+      # 요청 수 감소 알림 (서비스 중단 의심)
+      - alert: LLMRequestDrop
+        expr: sum(rate(llm_requests_total[5m])) < sum(rate(llm_requests_total[15m])) * 0.5
+        for: 5m
+        labels:
+          severity: critical
+          team: llm
+        annotations:
+          summary: "LLM 요청 수 급감"
+          description: "요청 수가 급격히 감소했습니다. 15분 평균 대비 50% 이상 감소"
+
+  - name: system_alerts
+    rules:
+      # Prometheus 자체 알림
+      - alert: PrometheusDown
+        expr: up{job="prometheus"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: monitoring
+        annotations:
+          summary: "Prometheus 다운"
+          description: "Prometheus가 응답하지 않습니다."
+
+      # LLM Auth Proxy 다운 알림
+      - alert: LLMAuthProxyDown
+        expr: up{job="llm-auth-proxy"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: llm
+        annotations:
+          summary: "LLM Auth Proxy 다운"
+          description: "LLM Auth Proxy가 응답하지 않습니다." 

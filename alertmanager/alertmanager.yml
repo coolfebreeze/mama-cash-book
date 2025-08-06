@@ -1,0 +1,39 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname', 'team']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'mattermost'
+
+receivers:
+  - name: 'mattermost'
+    webhook_configs:
+      - url: 'https://mattermost.example.com/hooks/your-mattermost-webhook-id'
+        send_resolved: true
+
+  - name: 'webhook'
+    webhook_configs:
+      - url: 'http://localhost:5001/webhook'
+        send_resolved: true
+
+  - name: 'email'
+    email_configs:
+      - to: 'admin@company.com'
+        from: 'alertmanager@company.com'
+        smarthost: 'smtp.company.com:587'
+        auth_username: 'alertmanager@company.com'
+        auth_password: 'password'
+        send_resolved: true
+
+templates:
+  - '/etc/alertmanager/template/*.tmpl'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'team'] 
