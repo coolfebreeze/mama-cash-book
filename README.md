@@ -8,6 +8,7 @@ LLM Auth Proxy를 통한 실시간 모니터링 및 알림 시스템
 - Prometheus + Grafana 기반 모니터링
 - 자동화된 알림 및 경고 시스템
 - 팀/모델/서비스 단위 분석
+- 사내망 환경에 최적화 (오프라인 플러그인 지원)
 
 ## 🏗 시스템 구성
 
@@ -27,6 +28,7 @@ LLM Auth Proxy를 통한 실시간 모니터링 및 알림 시스템
 │      Grafana         │
 │ - 대시보드           │
 │ - 알림 관리          │
+│ - 로컬 플러그인      │
 └──────────────────────┘
 ```
 
@@ -44,10 +46,13 @@ LLM Auth Proxy를 통한 실시간 모니터링 및 알림 시스템
 cp .env.example .env
 # .env 파일에서 설정값 수정
 
-# 2. 시스템 시작
+# 2. 시스템 시작 (플러그인 자동 다운로드 포함)
+./scripts/setup.sh
+
+# 3. 시스템 시작
 docker-compose up -d
 
-# 3. 접속
+# 4. 접속
 # Grafana: http://localhost:3000 (admin/admin)
 # Prometheus: http://localhost:9090
 ```
@@ -62,7 +67,8 @@ docker-compose up -d
 │   └── llm_admin_token.txt    # 인증 토큰
 ├── grafana/
 │   ├── provisioning/          # 대시보드 자동 설정
-│   └── dashboards/           # 커스텀 대시보드
+│   ├── dashboards/           # 커스텀 대시보드
+│   └── assets/               # 오프라인 플러그인
 ├── alertmanager/             # Alertmanager 설정
 ├── scripts/                  # 유틸리티 스크립트
 ```
@@ -79,6 +85,11 @@ docker-compose up -d
 - Email
 - Webhook
 
+### 오프라인 플러그인
+- Grafana 플러그인을 로컬에 다운로드하여 사용
+- 사내망 환경에서 외부 접속 없이 플러그인 사용 가능
+- `./scripts/download-plugins.sh`로 수동 다운로드 가능
+
 ## 📈 대시보드
 
 1. **개요 대시보드**: 전체 시스템 상태
@@ -93,6 +104,6 @@ docker-compose up -d
 - 요청 수 급증/급감 시
 - 토큰 사용량 급증 시
 
-## 📝 라이센스
+## �� 라이센스
 
 MIT License

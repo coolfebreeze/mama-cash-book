@@ -16,7 +16,7 @@ fi
 
 # 디렉토리 생성
 echo "📁 필요한 디렉토리를 생성합니다..."
-mkdir -p prometheus grafana/provisioning/datasources grafana/provisioning/dashboards grafana/dashboards alertmanager
+mkdir -p prometheus grafana/provisioning/datasources grafana/provisioning/dashboards grafana/dashboards grafana/assets alertmanager
 
 # 권한 설정
 echo "🔐 파일 권한을 설정합니다..."
@@ -24,6 +24,11 @@ chmod 600 prometheus/llm_admin_token.txt
 chmod 644 prometheus/prometheus.yml
 chmod 644 prometheus/alert.rules.yml
 chmod 644 alertmanager/alertmanager.yml
+
+# Grafana 플러그인 다운로드
+echo "📦 Grafana 플러그인을 다운로드합니다..."
+chmod +x scripts/download-plugins.sh
+./scripts/download-plugins.sh
 
 # Docker Compose 확인
 if ! command -v docker-compose &> /dev/null; then
