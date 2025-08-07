@@ -54,11 +54,14 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin123}
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_UPDATE_CHECK_DISABLE=true
+      - GF_UPDATE_CHECKER_ENABLED=false
+      - GF_ANALYTICS_REPORTING_ENABLED=false
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./grafana/assets:/var/lib/grafana/plugins
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     networks:
       - monitoring
     restart: unless-stopped
@@ -79,6 +82,8 @@ services:
       - '--path.procfs=/host/proc'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.filesystem.ignored-fs-types=^(sys|proc|auto)fs$$'
     networks:
       - monitoring
     restart: unless-stopped
