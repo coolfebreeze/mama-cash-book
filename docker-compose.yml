@@ -40,7 +40,6 @@ services:
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--storage.path=/alertmanager'
-      - '--web.enable-lifecycle'
     networks:
       - monitoring
     restart: unless-stopped
