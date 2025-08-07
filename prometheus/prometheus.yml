@@ -16,11 +16,13 @@ alerting:
 scrape_configs:
   # LLM Auth Proxy 메트릭 수집
   - job_name: 'llm-auth-proxy'
+    scheme: https
     metrics_path: /metrics
-    scheme: http
     bearer_token_file: /etc/prometheus/llm_admin_token.txt
     static_configs:
       - targets: ['your-llm-auth-proxy-host:8000']  # 실제 LLM Auth Proxy 주소로 변경
+    tls_config:
+      insecure_skip_verify: true
     scrape_interval: 10s
     scrape_timeout: 5s
     honor_labels: true
