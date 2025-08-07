@@ -1,347 +1,345 @@
 {
-  "dashboard": {
-    "id": null,
-    "title": "LLM Detailed Analysis",
-    "tags": ["llm", "analysis"],
-    "style": "dark",
-    "timezone": "browser",
-    "panels": [
-      {
-        "id": 1,
-        "title": "Requests per Second Trend",
-        "type": "timeseries",
-        "targets": [
-          {
-            "expr": "sum(rate(llm_requests_total[1m]))",
-            "refId": "A",
-            "legendFormat": "Total RPS"
-          },
-          {
-            "expr": "sum(rate(llm_requests_failed_total[1m]))",
-            "refId": "B",
-            "legendFormat": "Failed RPS"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "vis": false
-              },
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "reqps"
-          }
+  "id": null,
+  "title": "LLM Detailed Analysis",
+  "tags": ["llm", "analysis"],
+  "style": "dark",
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Requests per Second Trend",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(llm_requests_total[1m]))",
+          "refId": "A",
+          "legendFormat": "Total RPS"
         },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 0
+        {
+          "expr": "sum(rate(llm_requests_failed_total[1m]))",
+          "refId": "B",
+          "legendFormat": "Failed RPS"
         }
-      },
-      {
-        "id": 2,
-        "title": "Response Time Percentiles",
-        "type": "timeseries",
-        "targets": [
-          {
-            "expr": "histogram_quantile(0.50, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
-            "refId": "A",
-            "legendFormat": "P50"
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
           },
-          {
-            "expr": "histogram_quantile(0.90, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
-            "refId": "B",
-            "legendFormat": "P90"
-          },
-          {
-            "expr": "histogram_quantile(0.95, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
-            "refId": "C",
-            "legendFormat": "P95"
-          },
-          {
-            "expr": "histogram_quantile(0.99, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
-            "refId": "D",
-            "legendFormat": "P99"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "vis": false
             },
-            "custom": {
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "vis": false
-              },
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
             },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
-            "unit": "s"
-          }
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 0
-        }
-      },
-      {
-        "id": 3,
-        "title": "Success Rate by Status Code",
-        "type": "piechart",
-        "targets": [
-          {
-            "expr": "sum by (status_code) (rate(llm_requests_failed_total[5m]))",
-            "refId": "A"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "displayMode": "basic"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
+            "thresholdsStyle": {
+              "mode": "off"
             }
-          }
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 8
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
         }
       },
-      {
-        "id": 4,
-        "title": "Model Performance Comparison",
-        "type": "table",
-        "targets": [
-          {
-            "expr": "sum by (model) (rate(llm_requests_total[5m]))",
-            "refId": "A",
-            "legendFormat": "{{model}}"
-          },
-          {
-            "expr": "sum by (model) (rate(llm_requests_failed_total[5m])) / sum by (model) (rate(llm_requests_total[5m])) * 100",
-            "refId": "B",
-            "legendFormat": "{{model}}"
-          },
-          {
-            "expr": "histogram_quantile(0.95, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le, model))",
-            "refId": "C",
-            "legendFormat": "{{model}}"
-          },
-          {
-            "expr": "sum by (model) (rate(llm_tokens_used_total[5m]))",
-            "refId": "D",
-            "legendFormat": "{{model}}"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "displayMode": "basic"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            }
-          }
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 24,
-          "x": 0,
-          "y": 16
-        }
-      },
-      {
-        "id": 5,
-        "title": "Team Usage Distribution",
-        "type": "bargauge",
-        "targets": [
-          {
-            "expr": "sum by (team) (rate(llm_requests_total[5m]))",
-            "refId": "A"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "displayMode": "basic"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "reqps"
-          }
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 24
-        }
-      },
-      {
-        "id": 6,
-        "title": "Service Reliability Score",
-        "type": "stat",
-        "targets": [
-          {
-            "expr": "(1 - sum by (service) (rate(llm_requests_failed_total[5m])) / sum by (service) (rate(llm_requests_total[5m]))) * 100",
-            "refId": "A"
-          }
-        ],
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "custom": {
-              "displayMode": "basic"
-            },
-            "mappings": [],
-            "thresholds": {
-              "steps": [
-                {
-                  "color": "red",
-                  "value": null
-                },
-                {
-                  "color": "yellow",
-                  "value": 95
-                },
-                {
-                  "color": "green",
-                  "value": 99
-                }
-              ]
-            },
-            "unit": "percent"
-          }
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 24
-        }
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
       }
-    ],
-    "time": {
-      "from": "now-1h",
-      "to": "now"
     },
-    "timepicker": {},
-    "templating": {
-      "list": []
+    {
+      "id": 2,
+      "title": "Response Time Percentiles",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
+          "refId": "A",
+          "legendFormat": "P50"
+        },
+        {
+          "expr": "histogram_quantile(0.90, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
+          "refId": "B",
+          "legendFormat": "P90"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
+          "refId": "C",
+          "legendFormat": "P95"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le))",
+          "refId": "D",
+          "legendFormat": "P99"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "vis": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      }
     },
-    "annotations": {
-      "list": []
+    {
+      "id": 3,
+      "title": "Success Rate by Status Code",
+      "type": "piechart",
+      "targets": [
+        {
+          "expr": "sum by (status_code) (rate(llm_requests_failed_total[5m]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "displayMode": "basic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      }
     },
-    "refresh": "30s",
-    "schemaVersion": 27,
-    "version": 1,
-    "links": []
-  }
+    {
+      "id": 4,
+      "title": "Model Performance Comparison",
+      "type": "table",
+      "targets": [
+        {
+          "expr": "sum by (model) (rate(llm_requests_total[5m]))",
+          "refId": "A",
+          "legendFormat": "{{model}}"
+        },
+        {
+          "expr": "sum by (model) (rate(llm_requests_failed_total[5m])) / sum by (model) (rate(llm_requests_total[5m])) * 100",
+          "refId": "B",
+          "legendFormat": "{{model}}"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(llm_response_latency_seconds_bucket[5m])) by (le, model))",
+          "refId": "C",
+          "legendFormat": "{{model}}"
+        },
+        {
+          "expr": "sum by (model) (rate(llm_tokens_used_total[5m]))",
+          "refId": "D",
+          "legendFormat": "{{model}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "displayMode": "basic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      }
+    },
+    {
+      "id": 5,
+      "title": "Team Usage Distribution",
+      "type": "bargauge",
+      "targets": [
+        {
+          "expr": "sum by (team) (rate(llm_requests_total[5m]))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "displayMode": "basic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      }
+    },
+    {
+      "id": 6,
+      "title": "Service Reliability Score",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "(1 - sum by (service) (rate(llm_requests_failed_total[5m])) / sum by (service) (rate(llm_requests_total[5m]))) * 100",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "displayMode": "basic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 95
+              },
+              {
+                "color": "green",
+                "value": 99
+              }
+            ]
+          },
+          "unit": "percent"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      }
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  },
+  "refresh": "30s",
+  "schemaVersion": 27,
+  "version": 1,
+  "links": []
 } 
