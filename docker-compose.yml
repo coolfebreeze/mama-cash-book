@@ -83,19 +83,6 @@ services:
       - monitoring
     restart: unless-stopped
 
-  # Redis (캐시 및 세션 저장 - 선택사항)
-  redis:
-    image: redis:7-alpine
-    container_name: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - monitoring
-    restart: unless-stopped
-    command: redis-server --appendonly yes
-
   # Nginx (리버스 프록시 - 선택사항)
   nginx:
     image: nginx:alpine
@@ -119,8 +106,6 @@ volumes:
   grafana_data:
     driver: local
   alertmanager_data:
-    driver: local
-  redis_data:
     driver: local
 
 networks:
