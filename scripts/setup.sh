@@ -16,7 +16,7 @@ fi
 
 # 디렉토리 생성
 echo "📁 필요한 디렉토리를 생성합니다..."
-mkdir -p prometheus grafana/provisioning/datasources grafana/provisioning/dashboards grafana/dashboards alertmanager nginx/ssl
+mkdir -p prometheus grafana/provisioning/datasources grafana/provisioning/dashboards grafana/dashboards alertmanager
 
 # 권한 설정
 echo "🔐 파일 권한을 설정합니다..."
