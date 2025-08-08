@@ -341,5 +341,18 @@
   "refresh": "30s",
   "schemaVersion": 27,
   "version": 1,
-  "links": []
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "LLM Monitoring Overview",
+      "tooltip": "Go back to overview dashboard",
+      "type": "dashboards",
+      "url": "/d/llm-overview/llm-monitoring-overview"
+    }
+  ]
 } 
