@@ -9,8 +9,10 @@
 
 **상세 정보:**
 - 상태: {{ .Status }}
-- 시작 시간: {{ .StartsAt | since }}
-- 지속 시간: {{ .EndsAt | since }}
+- 시작 시간: {{ .StartsAt.Format "2006-01-02 15:04:05" }}
+{{ if .EndsAt }}
+- 종료 시간: {{ .EndsAt.Format "2006-01-02 15:04:05" }}
+{{ end }}
 
 {{ if .CommonAnnotations.summary }}
 **요약:** {{ .CommonAnnotations.summary }}
