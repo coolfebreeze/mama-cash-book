@@ -88,7 +88,7 @@
     },
     {
       "id": 3,
-      "title": "Average Response Time (P95)",
+      "title": "Response Time P95 (5m)",
       "type": "stat",
       "targets": [
         {
@@ -165,6 +165,51 @@
         "h": 8,
         "w": 6,
         "x": 18,
+        "y": 0
+      }
+    },
+    {
+      "id": 9,
+      "title": "Response Time P95 (1h)",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(llm_response_latency_seconds_bucket[1h])) by (le))",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "displayMode": "basic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
+              }
+            ]
+          },
+          "unit": "s"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 24,
         "y": 0
       }
     },
