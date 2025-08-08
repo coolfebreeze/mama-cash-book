@@ -41,7 +41,7 @@ services:
     environment:
       - MATTERMOST_WEBHOOK_URL=${MATTERMOST_WEBHOOK_URL}
     command:
-      - sh
+      - /bin/sh
       - -c
       - |
         envsubst < /etc/alertmanager/alertmanager.yml.template > /etc/alertmanager/alertmanager.yml
