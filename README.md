@@ -53,8 +53,9 @@ cp .env.example .env
 docker-compose up -d
 
 # 4. 접속
-# Grafana: http://localhost:3000 (admin/admin)
-# Prometheus: http://localhost:9090
+# Grafana: http://${GRAFANA_HOST:-localhost}:${GRAFANA_PORT:-3000} (admin/admin123)
+# Prometheus: http://${PROMETHEUS_HOST:-localhost}:${PROMETHEUS_PORT:-9090}
+# Alertmanager: http://${ALERTMANAGER_HOST:-localhost}:${ALERTMANAGER_PORT:-9093}
 ```
 
 ## 📁 프로젝트 구조

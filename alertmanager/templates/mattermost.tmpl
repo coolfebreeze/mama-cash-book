@@ -1,0 +1,52 @@
+{{ define "mattermost.message" }}
+🚨 **{{ .GroupLabels.alertname }}**
+
+**팀:** {{ .GroupLabels.team }}
+{{ if .GroupLabels.model }}**모델:** {{ .GroupLabels.model }}{{ end }}
+{{ if .GroupLabels.service }}**서비스:** {{ .GroupLabels.service }}{{ end }}
+
+{{ .CommonAnnotations.description }}
+
+**상세 정보:**
+- 상태: {{ .Status }}
+- 시작 시간: {{ .StartsAt | since }}
+- 지속 시간: {{ .EndsAt | since }}
+
+{{ if .CommonAnnotations.summary }}
+**요약:** {{ .CommonAnnotations.summary }}
+{{ end }}
+
+{{ if .CommonAnnotations.current_value }}
+**현재 값:** {{ .CommonAnnotations.current_value }}
+{{ end }}
+
+{{ if .CommonAnnotations.threshold }}
+**임계값:** {{ .CommonAnnotations.threshold }}
+{{ end }}
+
+{{ if .CommonAnnotations.trend }}
+**추세:** {{ .CommonAnnotations.trend }}
+{{ end }}
+
+{{ if .CommonAnnotations.impact }}
+**영향도:** {{ .CommonAnnotations.impact }}
+{{ end }}
+
+{{ if .CommonAnnotations.dashboard }}
+**대시보드:** {{ .CommonAnnotations.dashboard }}
+{{ end }}
+
+{{ if .CommonAnnotations.runbook }}
+**조치 가이드:** {{ .CommonAnnotations.runbook }}
+{{ end }}
+
+{{ if .Alerts }}
+**영향받는 인스턴스:**
+{{ range .Alerts }}
+• {{ .Labels.instance }} ({{ .Labels.job }})
+{{ end }}
+{{ end }}
+
+---
+*자동 생성된 알림입니다*
+{{ end }} 
