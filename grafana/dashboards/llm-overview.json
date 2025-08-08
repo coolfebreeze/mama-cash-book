@@ -484,5 +484,18 @@
   "refresh": "30s",
   "schemaVersion": 27,
   "version": 1,
-  "links": []
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "LLM Detailed Analysis",
+      "tooltip": "Go to detailed analysis dashboard",
+      "type": "dashboards",
+      "url": "/d/llm-detailed-analysis/llm-detailed-analysis"
+    }
+  ]
 } 
