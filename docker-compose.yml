@@ -35,15 +35,17 @@ services:
     ports:
       - "${ALERTMANAGER_PORT:-9093}:9093"
     volumes:
-      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml.template
       - ./alertmanager/templates:/etc/alertmanager/template
       - alertmanager_data:/alertmanager
     environment:
       - MATTERMOST_WEBHOOK_URL=${MATTERMOST_WEBHOOK_URL}
     command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
-      - '--config.expand-env'
-      - '--storage.path=/alertmanager'
+      - sh
+      - -c
+      - |
+        envsubst < /etc/alertmanager/alertmanager.yml.template > /etc/alertmanager/alertmanager.yml
+        /bin/alertmanager --config.file=/etc/alertmanager/alertmanager.yml --storage.path=/alertmanager
     networks:
       - monitoring
     restart: unless-stopped
