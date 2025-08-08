@@ -38,8 +38,6 @@ services:
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
       - ./alertmanager/templates:/etc/alertmanager/template
       - alertmanager_data:/alertmanager
-    environment:
-      - MATTERMOST_WEBHOOK_URL=${MATTERMOST_WEBHOOK_URL}
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--storage.path=/alertmanager'
