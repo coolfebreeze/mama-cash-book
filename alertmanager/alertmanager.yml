@@ -16,7 +16,6 @@ receivers:
         http_config:
           tls_config:
             insecure_skip_verify: true
-        message: '{{ template "mattermost.message" . }}'
 
   - name: 'email'
     email_configs:
